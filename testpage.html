@@ -1,0 +1,6 @@
+<script src="wodgenerator.js"></script>
+<script>
+var text = new Workout(100, legalExercises).render();
+text = text.replace(/\r\n|\r|\n/g,"<br />");
+document.write(text);
+</script>
