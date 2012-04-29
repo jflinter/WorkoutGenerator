@@ -2,7 +2,7 @@ Array.prototype.randomIndex = function() {
     return Math.floor(Math.random() * this.length);
 }
 
-function Exercise(name, legalScales, difficultyFunction, renderFunction) {
+function Exercise(name, legalScales, difficultyFunction, renderFunction, options) {
     this.name = name;
     this.legalScales = legalScales;
     this.difficultyForScale = difficultyFunction;
@@ -10,6 +10,7 @@ function Exercise(name, legalScales, difficultyFunction, renderFunction) {
       return this.legalScales[this.legalScales.randomIndex()]
     };
     this.render = renderFunction;
+    this.options = options ? options : {};
 }
 
 function Set(exercise, scale, reps) {
@@ -24,10 +25,10 @@ Set.prototype.render = function() {
   return this.reps + " " + this.exercise.render(this.scale);
 }
 function generateSet(exercise, difficulty) {
-    var scale = exercise.getLegalScale();
-    var repDifficulty = exercise.difficultyForScale(scale);
-    var reps = Math.floor(difficulty / repDifficulty);
-    return new Set(exercise, scale, reps);
+  var scale = exercise.getLegalScale();
+  var repDifficulty = exercise.difficultyForScale(scale);
+  var reps = exercise.options.oneRepOnly ? 1 : Math.floor(difficulty / repDifficulty);
+  return new Set(exercise, scale, reps);
 }
 
 function Superset(sets) {
@@ -50,31 +51,42 @@ Superset.prototype.render = function() {
 function generateSuperset(difficulty, legalExercises) {
     var totalDifficulty = 0;
     var sets = [];
-    while (totalDifficulty / difficulty < 0.8) {
+    while (totalDifficulty < difficulty || sets.length < 2) {
         var exercise = legalExercises.splice(legalExercises.randomIndex(), 1)[0];
-        var set = generateSet(exercise, Math.floor(Math.random() * (difficulty - totalDifficulty)));
+        if (!exercise) {
+          break;
+        }
+        var set;
+        while (true) {
+          set = generateSet(exercise, Math.floor(Math.random() * (difficulty)));
+          if (set.reps) {
+            break;
+          }
+        }
         sets.push(set);
         totalDifficulty += set.difficulty();
     }
+    var randomOrder = (Math.random() > 0.5) ? 1 : -1;
+    sets.sort(function(a, b) {
+      return (a.reps > b.reps ? 1 : -1) * randomOrder;
+    });
     return new Superset(sets);
 }
 
 function Workout(difficulty, legalExercises) {
-    this.supersets = [];
-    this.numberOfSupersets = 1;
-    //Math.floor((Math.random()*10)+1);
-    while (this.supersets.length < this.numberOfSupersets) {
-        this.supersets.push(generateSuperset(difficulty / this.numberOfSupersets, legalExercises));
-    }
+    this.numberOfRounds = Math.floor((Math.random()*10)+1);
+    this.superset = generateSuperset(difficulty / this.numberOfRounds, legalExercises);
 }
 Workout.prototype.render = function() {
   var renderedWorkout = "";
-  for (var i = 0; i < this.supersets.length; i++) {
-    renderedWorkout += this.supersets[i].render();
-    if (i == this.supersets.length) {
-      renderedWorkout += "\nFollowed by:\n";
-    }
+  if (Math.random() > 0.5) {
+    renderedWorkout += this.numberOfRounds + " rounds of:\n"
   }
+  else {
+    var minutes = this.numberOfRounds = Math.floor((Math.random()*10)+10);
+    renderedWorkout += "As many rounds as possible in " + minutes + " minutes of:\n"
+  }
+  renderedWorkout += this.superset.render();
   return renderedWorkout;
 };
 
@@ -98,19 +110,21 @@ function() {
 
 new Exercise('Run', [200, 400, 800, 1200, 1600],
 function(distance) {
-    return distance * (50 / 1600)
+    return distance * (50 / 1200)
 },
 function(scale) {
     return scale + 'm run'
-}),
+},
+{oneRepOnly : true}),
 
 new Exercise('Row', [200, 400, 800, 1200, 1600],
 function(distance) {
-    return distance * (50 / 1600)
+    return distance * (50 / 800)
 },
 function(scale) {
     return scale + 'm row'
-}),
+},
+{oneRepOnly : true}),
 
 new Exercise('Burpee', [1],
 function() {
@@ -122,7 +136,7 @@ function() {
 
 new Exercise('Situp', [1],
 function() {
-    return 0.2
+    return 0.3
 },
 function() {
     return 'situps'
@@ -138,7 +152,7 @@ function(scale) {
 
 new Exercise('Air Squat', [1],
 function() {
-    return 0.2
+    return 0.5
 },
 function() {
     return 'air squats'
