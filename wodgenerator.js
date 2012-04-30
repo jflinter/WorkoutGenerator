@@ -134,44 +134,34 @@ Set.prototype.scaleInDifficulty = function(direction) {
   }
   return false;
 }
-Superset.prototype.easiestSet = function() {
-  var easiest;
-  var easiestScore = 9999;
-  this.sets.forEach(function(set) {
-    if (set.difficulty() < easiestScore) {
-      easiestScore = set.difficulty();
-      easiest = set;
-    }
-  });
-  return easiest;
-}
-Superset.prototype.hardestSet = function() {
-  var hardest;
-  var hardestScore = -1;
-  this.sets.forEach(function(set) {
-    if (set.difficulty() > hardestScore) {
-      hardestScore = set.difficulty();
-      hardest = set;
-    }
-  });
-  return hardest;
-}
+
 Superset.prototype.scaleToDifficulty = function(targetDifficulty) {
+  this.sets.sort(function(a,b) {
+    return a.difficulty() > b.difficulty();
+  });
   var success = true;
   if (this.difficulty() > targetDifficulty) {
-    //TODO: Fix this so that if the hardest/easiest set can't be scaled, we scale the next one instead.
     while (this.difficulty() > targetDifficulty && success) {
-      success = this.hardestSet().scaleInDifficulty(-1);
+      for (var i = this.sets.length-1; i >= 0; i--) {
+        success = this.sets[i].scaleInDifficulty(-1);
+        if (success) {
+          break;
+        }
+      }
     }
   }
   else {
     while (this.difficulty() < targetDifficulty && success) {
-      success = this.easiestSet().scaleInDifficulty(1);
+      for (var i = 0; i < this.sets.length; i++) {
+        success = this.sets[i].scaleInDifficulty(1);
+        if (success) {
+          break;
+        }
+      }
     }
   }
   return this;
 }
-
 
 function generateSuperset(difficulty, legalExercises) {
     var totalDifficulty = 0;

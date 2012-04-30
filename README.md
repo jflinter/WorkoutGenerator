@@ -7,10 +7,10 @@ Contents
 --------
 * wodgenerator.js : Core logic. Defines all the models (workout, exercise, etc).
 * exercises.js : Contains a bunch of sample exercises that the generator uses to create workouts.
-* testpage.html (plus js/css folders): a sample application to test and display workouts using the generator.
+* testpage.html : a sample application to test and display workouts using the generator.
 
 Coming soon
 -----------
-* Better logic for workout generation
-* Auto-scale workouts once you generate them
-
+* Scaling actually changing the exercise type (e.g. muscle-ups become pullups)
+* More workout types (multiple supersets, Tabatas)
+* More exercises

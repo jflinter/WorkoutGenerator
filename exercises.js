@@ -13,7 +13,7 @@ new Exercise(
 
 new Exercise(
   'Pullup',
-  'Bodyweight',
+  'Bar',
   [1],
   function() { return 3 },
   function() { return 'pullups' },
