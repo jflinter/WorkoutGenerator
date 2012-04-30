@@ -2,10 +2,11 @@
 
 function Workout(difficulty, legalExercises) {
     this.workoutType = (Math.random() > 0.5) ? "AMRAP": "Rounds";
+    this.numberOfRounds = Math.floor((Math.random() * 10) + 1);
     if (this.workoutType == "AMRAP") {
         this.time = Math.floor((Math.random() * 10) + 10);
+        this.numberOfRounds++;
     }
-    this.numberOfRounds = Math.floor((Math.random() * 10) + 1);
     this.superset = generateSuperset(difficulty / this.numberOfRounds, legalExercises);
     this.scaleToDifficulty(difficulty);
 }
@@ -173,7 +174,7 @@ function generateSuperset(difficulty, legalExercises) {
         }
         var set;
         while (true) {
-          var maxDifficulty = Math.min(difficulty * 0.7, difficulty - totalDifficulty);
+          var maxDifficulty = Math.min(difficulty * 0.8, difficulty - totalDifficulty);
             var targetDifficulty = Math.min(Math.floor(Math.random() * (difficulty)), maxDifficulty);
             set = generateSet(exercise, targetDifficulty);
             if (set.reps) {
