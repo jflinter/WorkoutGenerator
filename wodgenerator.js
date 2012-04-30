@@ -118,7 +118,7 @@ Set.prototype.scaleInDifficulty = function(direction) {
     var currentDifficulty = this.difficulty();
     var increasedRepDifficulty = (this.reps + 1) * ex.difficultyAtLevel(level);
     var newDifficulty = ex.difficultyAtLevel(level + direction);
-    var mostPossibleReps = Math.ceil(this.reps * (currentDifficulty/newDifficuly));
+    var mostPossibleReps = Math.ceil(this.reps * (currentDifficulty/newDifficulty));
     for (var reps = 0; reps <= mostPossibleReps; reps++) {
       var increasedScaleDifficulty = reps * newDifficulty;
       if (Math.abs(increasedScaleDifficulty - currentDifficulty) < Math.abs(increasedRepDifficulty - currentDifficulty)) {
