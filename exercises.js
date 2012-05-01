@@ -1,4 +1,16 @@
+MathUtils = {
+  range : function(start, end, scale) {
+  scale = scale || 1;
+  var generatedRange = []
+  for (var i = start; i <= end; i+=scale) {
+    generatedRange.push(i);
+  }
+  return generatedRange;
+}
+};
+
 WodGenerator = {
+  
   exercises : [
 
 //Bodyweight/No equipment
@@ -76,6 +88,15 @@ new Exercise(
   {minReps: 5}
 ),
 
+new Exercise(
+  'KB Snatch', 
+  'Kettlebells',
+  [15, 30, 45],
+  function(weight) { return 1 + weight / 45 },
+  function(scale) { return scale +'kg kettlebell snatches' },
+  {minReps: 5}
+),
+
 //Pullup Bar
 new Exercise(
   'Pullup',
@@ -114,6 +135,40 @@ new Exercise(
   {minReps: 10}
 ),
 
+//Barbell
+
+new Exercise(
+  'Deadlift',
+  'Barbell',
+  MathUtils.range(45, 225, 10),
+  function(weight) { return weight / 25 },
+  function(weight) { return weight + 'lb deadlifts' }
+),
+  
+new Exercise(
+  'Power Clean',
+  'Barbell',
+  MathUtils.range(25, 155, 10),
+  function(weight) { return weight / 25 },
+  function(weight) { return weight + 'lb power cleans' }
+),
+
+new Exercise(
+  'Front Squat',
+  'Barbell',
+  MathUtils.range(45, 175, 10),
+  function(weight) { return weight / 25 },
+  function(weight) { return weight + 'lb front squats' }
+),
+  
+new Exercise(
+  'Back Squat',
+  'Barbell',
+  MathUtils.range(45, 250, 20),
+  function(weight) { return weight / 25 },
+  function(weight) { return weight + 'lb back squats' }
+),
+      
 //Other
 
 new Exercise(
@@ -134,4 +189,15 @@ new Exercise(
   {minReps : 3}
 ),
 
-]};
+],
+other : [
+new Exercise(
+  'Rest', 
+  'Other',
+  function() { return 0 },
+  function(time) { return time + 'mminute rest' }
+),
+]
+
+};
+

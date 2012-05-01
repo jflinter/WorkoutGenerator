@@ -30,10 +30,11 @@ Exercise.prototype.difficultyAtLevel = function(level) {
   return this.difficultyFunction(this.scales[level]);
 }
 
-function Set(exercise, difficultyLevel, reps) {
+function Set(exercise, difficultyLevel, reps, order) {
     this.exercise = exercise;
     this.difficultyLevel = difficultyLevel;
     this.reps = reps;
+    this.order = order;
 }
 
 function Superset(sets) {
@@ -93,13 +94,13 @@ Workout.prototype.render = function() {
 
 /* Workout generation logic. */
 
-function generateSet(exercise, targetDifficulty) {
+function generateSet(exercise, targetDifficulty, order) {
     var numberOfScales = exercise.scales.length;
     var difficultyLevel = Math.floor(Math.random() * numberOfScales);
     var repDifficulty = exercise.difficultyAtLevel(difficultyLevel);
     var reps = Math.max(Math.floor(targetDifficulty / repDifficulty), 1);
     reps = Math.max(Math.min(exercise.options.maxReps, reps), exercise.options.minReps);
-    return new Set(exercise, difficultyLevel, reps);
+    return new Set(exercise, difficultyLevel, reps, order);
 }
 
 Set.prototype.scaleInDifficulty = function(direction) {
@@ -167,22 +168,24 @@ Superset.prototype.scaleToDifficulty = function(targetDifficulty) {
 function generateSuperset(difficulty, legalExercises) {
     var totalDifficulty = 0;
     var sets = [];
+    var order = 0;
     while (totalDifficulty < difficulty || sets.count < 2) {
-        var exercise = legalExercises.splice(legalExercises.randomIndex(), 1)[0];
-        if (!exercise) {
+      var exercise = legalExercises.splice(legalExercises.randomIndex(), 1)[0];
+      if (!exercise) {
+          break;
+      }
+      var set;
+      while (true) {
+        var maxDifficulty = Math.min(difficulty * 0.8, difficulty - totalDifficulty);
+        var targetDifficulty = Math.min(Math.floor(Math.random() * (difficulty)), maxDifficulty);
+        set = generateSet(exercise, targetDifficulty, order);
+        if (set.reps) {
             break;
         }
-        var set;
-        while (true) {
-          var maxDifficulty = Math.min(difficulty * 0.8, difficulty - totalDifficulty);
-            var targetDifficulty = Math.min(Math.floor(Math.random() * (difficulty)), maxDifficulty);
-            set = generateSet(exercise, targetDifficulty);
-            if (set.reps) {
-                break;
-            }
-        }
-        sets.push(set);
-        totalDifficulty += set.difficulty();
+      }
+      sets.push(set);
+      totalDifficulty += set.difficulty();
+      order++;
     }
     return new Superset(sets);
 }
@@ -191,6 +194,6 @@ function generateSuperset(difficulty, legalExercises) {
 Workout.prototype.scaleToDifficulty = function(difficulty) {
   this.superset.scaleToDifficulty(difficulty/this.numberOfRounds);
   this.superset.sets.sort(function(a,b) {
-    return a.exercise.name > b.exercise.name;
+    return a.order > b.order;
   });
 }
