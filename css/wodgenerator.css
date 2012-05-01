@@ -2,7 +2,19 @@
   margin-left:20px;
 }
 
+#workout_title {
+  margin-top:20px;
+  margin-bottom:;
+}
+
 #workout_display {
-  font-size:18px;
-  line-height:18px;
+  font-size:16px;
+}
+
+#workout_display dt {
+  height:20px;
+}
+
+#workout_display dd {
+  height:20px;
 }

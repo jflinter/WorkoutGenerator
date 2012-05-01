@@ -25,32 +25,45 @@
 		</div>
 	</div>
   	<div class="container">
-	<div class="page-header"><h1>Workout Generator</h1></div>
+		<div class="page-header">
+			<h1>Workout Generator</h1>
+		</div>
 		<div class="row">
-			<div class = "span4">
-		  		<div id="exercises"></div>
-				<button id="generateWorkout" name="generateWorkout">Generate Workout</button>
-		  	</div>
-			<div class="span6">
-				<div id="workout_title" style="display:none"><h2>Your Workout:</h2></div>
-				<div id="workout_display"><h2>Generate a workout to the left.</h2></div>
-				<div id="workout_buttons" style="display:none">
-					<div id="button_easier" class="btn">Easier</div>
-					<div id="button_harder" class="btn">Harder</div>
-				</div>
+		<div class="span4">
+			<h2>Step 1</h2>
+			<h3>Pick the exercises to shuffle</h3>
+	  		<div id="exercises"></div>
+	  	</div>
+		<div class="span6">
+			<h2>Step 2</h2>
+			<h3>Generate your workout</h3>
+			<div class='btn btn-large btn-success' id="generateWorkout" name="generateWorkout">Go!</div>
+			<div id="workout_title" style="display:none">
+				<h2>Your workout:</h2>
+				<div id="workout_display"></div>
+				<div id="button_easier" class="btn">Easier</div>
+				<div id="button_harder" class="btn">Harder</div>
 			</div>
 		</div>
-		<div class="modal hide fade span8" id="infoModal">
-			<div class="modal-header">
-			    <a class="close" data-dismiss="modal">×</a>
-			    <h3>Workout Generator</h3>
-			  </div>
-			<div class="modal-body"><p>
-				This is a tool to generate crossfit-style workouts that only need the equipment that you have. Just check the boxes for exercises you'd like to include in the shuffle, click "Generate Workout", and scale it to a difficulty you prefer by pressing "easier" and "harder".
-				</p></div>
-				<div class="modal-footer">
-			    <a href="#" data-dismiss="modal" class="btn">Close</a>
-			  </div>
+		<div class="span2">
+			<a href="https://twitter.com/share" class="twitter-share-button" data-via="jflinter" data-size="large" data-count="none">Tweet</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		</div>
+	</div>
+	<div class="modal hide fade span8" id="infoModal">
+		<div class="modal-header">
+		    <a class="close" data-dismiss="modal">×</a>
+		    <h3>Workout Generator</h3>
+		  </div>
+		<div class="modal-body">
+			<p>
+			Workout Generator gives you personalized crossfit-style workouts that only need the equipment that you have.
+			Just check the boxes for exercises you'd like to include in the shuffle, click "Generate Workout",
+			and scale it to a difficulty you prefer by pressing "easier" and "harder".
+			</p>
+		</div>
+		<div class="modal-footer">
+		    <a href="#" data-dismiss="modal" class="btn">Close</a>
 		</div>
 	</div>
 
@@ -96,16 +109,16 @@ for (var i = 0; i < WodGenerator.exercises.length; i++) {
 }
 
 Set.prototype.render = function() {
-    return this.reps + " " + this.exercise.renderForLevel(this.difficultyLevel);
+    return this.reps + " " + this.exercise.renderForLevel(this.difficultyLevel) + " ";
 }
 
 Workout.prototype.render = function() {
     var renderedWorkout = "<dl><dt>";
     if (this.workoutType == "AMRAP") {
-        renderedWorkout += "As many rounds as possible in " + this.time + " minutes of:";
+        renderedWorkout += "As many rounds as possible in " + this.time + " minutes of: ";
     }
     else {
-        renderedWorkout += this.numberOfRounds + " round" + ((this.numberOfRounds != 1) ? "s" : "") + " of:"
+        renderedWorkout += this.numberOfRounds + " round" + ((this.numberOfRounds != 1) ? "s" : "") + " of: "
     }
     renderedWorkout += "</dt>";
     renderedWorkout += this.superset.render();
@@ -128,8 +141,7 @@ function renderWod() {
 	var html = WodGenerator.workout.render();
 	$("#workout_display").html(html);
 	$("#workout_title").show();
-	$("#workout_buttons").show();
-	
+	$(".twitter-share-button").attr('data-text', $("#workout_display").text());
 }
 
 $("#button_harder").click(function() {
