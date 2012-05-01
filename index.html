@@ -29,25 +29,27 @@
 			<h1>Workout Generator</h1>
 		</div>
 		<div class="row">
-		<div class="span4">
-			<h2>Step 1</h2>
-			<h3>Pick the exercises to shuffle</h3>
-	  		<div id="exercises"></div>
-	  	</div>
-		<div class="span6">
-			<h2>Step 2</h2>
-			<h3>Generate your workout</h3>
-			<div class='btn btn-large btn-success' id="generateWorkout" name="generateWorkout">Go!</div>
-			<div id="workout_title" style="display:none">
-				<h2>Your workout:</h2>
-				<div id="workout_display"></div>
-				<div id="button_easier" class="btn">Easier</div>
-				<div id="button_harder" class="btn">Harder</div>
+			<div class="span4">
+				<h2>Step 1</h2>
+				<h3>Pick the exercises to shuffle</h3>
+		  		<div id="exercises"></div>
+		  	</div>
+			<div class="span4">
+				<h2>Step 2</h2>
+				<h3>Generate your workout</h3>
+				<div class='btn btn-large btn-success' id="generateWorkout" name="generateWorkout">Go!</div>
+				<div id="workout_title" style="display:none">
+					<h2>Your workout:</h2>
+					<div id="workout_display"></div>
+					<div id="button_easier" class="btn btn-info">Easier</div>
+					<div id="button_harder" class="btn btn-info">Harder</div>
+				</div>
 			</div>
-		</div>
-		<div class="span2">
-			<a href="https://twitter.com/share" class="twitter-share-button" data-via="jflinter" data-size="large" data-count="none">Tweet</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			<div class="span4" id="workout_share">
+				<h2>Step 3</h2>
+				<h3>Do your workout, then tell your friends!</h3>
+				<div class='btn' id="twitter-button"><a href="#"><i class="icon-twitter"></i><span class="twitter-label">Tweet</span></a></div>
+			</div>
 		</div>
 	</div>
 	<div class="modal hide fade span8" id="infoModal">
@@ -141,7 +143,10 @@ function renderWod() {
 	var html = WodGenerator.workout.render();
 	$("#workout_display").html(html);
 	$("#workout_title").show();
-	$(".twitter-share-button").attr('data-text', $("#workout_display").text());
+	$("#workout_share").show();
+	var tweet_text = "I just did " + $("#workout_display").text() + ", thanks to Workout Generator!";
+	$("#workout_twitter").html('<a href="https://twitter.com/share" class="twitter-share-button" data-via="jflinter" data-size="large" data-count="none" data-text="'+tweet_text+'">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</scr'+'ipt>');
+	
 }
 
 $("#button_harder").click(function() {
