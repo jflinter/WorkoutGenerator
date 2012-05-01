@@ -185,7 +185,7 @@ new Exercise(
   'Other', 
   [8, 12, 16, 20, 24, 28, 32],
   function(height) { return height / 16 },
-  function(height) { return scale + '" box jumps' },
+  function(height) { return height + '" box jumps' },
   {minReps : 3}
 ),
 
