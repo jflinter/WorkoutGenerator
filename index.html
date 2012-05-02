@@ -45,11 +45,6 @@
 					<div id="button_harder" class="btn btn-info">Harder</div>
 				</div>
 			</div>
-			<div class="span4" id="workout_share">
-				<h2>Step 3</h2>
-				<h3>Do your workout, then tell your friends!</h3>
-				<div class='btn' id="twitter-button"><a href="#"><i class="icon-twitter"></i><span class="twitter-label">Tweet</span></a></div>
-			</div>
 		</div>
 	</div>
 	<div class="modal hide fade span8" id="infoModal">
@@ -143,9 +138,6 @@ function renderWod() {
 	var html = WodGenerator.workout.render();
 	$("#workout_display").html(html);
 	$("#workout_title").show();
-	$("#workout_share").show();
-	var tweet_text = "I just did " + $("#workout_display").text() + ", thanks to Workout Generator!";
-	$("#workout_twitter").html('<a href="https://twitter.com/share" class="twitter-share-button" data-via="jflinter" data-size="large" data-count="none" data-text="'+tweet_text+'">Tweet</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</scr'+'ipt>');
 	
 }
 
