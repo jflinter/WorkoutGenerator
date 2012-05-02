@@ -169,7 +169,7 @@ function generateSuperset(difficulty, legalExercises) {
     var totalDifficulty = 0;
     var sets = [];
     var order = 0;
-    while (totalDifficulty < difficulty || sets.count < 2) {
+    while (totalDifficulty < difficulty || sets.count < 3) {
       var exercise = legalExercises.splice(legalExercises.randomIndex(), 1)[0];
       if (!exercise) {
           break;
