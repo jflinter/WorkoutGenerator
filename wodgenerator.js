@@ -45,6 +45,15 @@ Array.prototype.randomIndex = function() {
     return Math.floor(Math.random() * this.length);
 }
 
+Array.prototype.weightedIndex = function() {
+  var x = (Math.random() * 2) - 1; // -1 to 1
+  var y = (Math.random() * 2) - 1; // -1 to 1
+  var z = (Math.random() * 2) - 1; // -1 to 1
+  var g = x + y + z; // -3 to 3
+  var r = (g / 6) + 0.5; // 0 to 1
+  return Math.floor(r * this.length);
+}
+
 /* Minor Helper Functions */
 
 Set.prototype.difficulty = function() {
@@ -95,8 +104,7 @@ Workout.prototype.render = function() {
 /* Workout generation logic. */
 
 function generateSet(exercise, targetDifficulty, order) {
-    var numberOfScales = exercise.scales.length;
-    var difficultyLevel = Math.floor(Math.random() * numberOfScales);
+    var difficultyLevel = exercise.scales.weightedIndex();
     var repDifficulty = exercise.difficultyAtLevel(difficultyLevel);
     var reps = Math.max(Math.floor(targetDifficulty / repDifficulty), 1);
     reps = Math.max(Math.min(exercise.options.maxReps, reps), exercise.options.minReps);
