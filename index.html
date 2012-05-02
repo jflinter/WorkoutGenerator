@@ -5,6 +5,12 @@
   <meta name="description" content="Randomly generate crossfit-style workouts with just the equipment you have.">
   <meta name="author" content="@jflinter">
   <meta name="viewport" content="width=device-width">
+	<meta property="og:title" content="Workout Generator" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://www.jackflintermann.com/WorkoutGenerator" />
+	<meta property="og:image" content="" />
+	<meta property="og:site_name" content="Workout Generator" />
+	<meta property="fb:admins" content="2409601" />
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/wodgenerator.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -18,7 +24,7 @@
 	  var js, fjs = d.getElementsByTagName(s)[0];
 	  if (d.getElementById(id)) return;
 	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1";
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script>
 	<a href="http://github.com/jflinter/WorkoutGenerator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/camo.github.com/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
@@ -35,6 +41,7 @@
   	<div class="container">
 		<div class="page-header">
 			<h1>Workout Generator</h1>
+			<div class="fb-like" data-href="http://www.jackflintermann.com/WorkoutGenerator" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="light"></div>
 		</div>
 		<div class="row">
 			<div class="span4">
@@ -51,7 +58,6 @@
 					<div id="workout_display"></div>
 					<div id="button_easier" class="btn btn-info">Easier</div>
 					<div id="button_harder" class="btn btn-info">Harder</div>
-					<div class="fb-like" data-href="http://www.jackflintermann.com/WorkoutGenerator" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="light"></div>
 				</div>
 			</div>
 		</div>
@@ -62,11 +68,8 @@
 		    <h3>Workout Generator</h3>
 		  </div>
 		<div class="modal-body">
-			<p>
-			Workout Generator gives you personalized crossfit-style workouts that only need the equipment that you have.
-			Just check the boxes for exercises you'd like to include in the shuffle, click "Generate Workout",
-			and scale it to a difficulty you prefer by pressing "easier" and "harder".
-			</p>
+			<p>Workout Generator gives you personalized crossfit-style workouts that only need the equipment that you have.</p>
+			<p>It was made by <a href="http://www.jackflintermann.com">Jack Flintermann</a>. Suggestions/comments are welcome!</p>
 		</div>
 		<div class="modal-footer">
 		    <a href="#" data-dismiss="modal" class="btn">Close</a>
