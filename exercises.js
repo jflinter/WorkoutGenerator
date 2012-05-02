@@ -82,8 +82,8 @@ new Exercise(
 new Exercise(
   'KB Swing', 
   'Kettlebells',
-  [15, 30, 45],
-  function(weight) { return 1 + weight / 45 },
+  [16, 20, 24, 28],
+  function(weight) { return 1 + weight / 28 },
   function(scale) { return scale +'kg kettlebell swings' },
   {minReps: 5}
 ),
@@ -91,8 +91,8 @@ new Exercise(
 new Exercise(
   'KB Snatch', 
   'Kettlebells',
-  [15, 30, 45],
-  function(weight) { return 1 + weight / 45 },
+  [16, 20, 24, 28],
+  function(weight) { return 1 + weight / 28 },
   function(scale) { return scale +'kg kettlebell snatches' },
   {minReps: 5}
 ),
