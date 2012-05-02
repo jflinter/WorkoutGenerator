@@ -15,5 +15,7 @@
 }
 
 .fb-like {
-  padding-top:20px;
+  position: relative;
+  left: 20px;
+  top:5px;
 }
