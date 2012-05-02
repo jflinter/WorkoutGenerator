@@ -169,11 +169,8 @@ function generateSuperset(difficulty, legalExercises) {
     var totalDifficulty = 0;
     var sets = [];
     var order = 0;
-    while (totalDifficulty < difficulty || sets.count < 3) {
+    while (totalDifficulty < difficulty || sets.length < 3) {
       var exercise = legalExercises.splice(legalExercises.randomIndex(), 1)[0];
-      if (!exercise) {
-          break;
-      }
       var set;
       while (true) {
         var maxDifficulty = Math.min(difficulty * 0.8, difficulty - totalDifficulty);
