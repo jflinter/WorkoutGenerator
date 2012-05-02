@@ -14,14 +14,6 @@
   height:20px;
 }
 
-#twitter-button a {
-  text-decoration:none;
-  color:black;
-}
-
-.icon-twitter {
-  background-image: url(https://platform.twitter.com/widgets/images/btn.0329694f6eeec0460469a1cdbd285167.png);
-  background-position: -24px 0px;
-  width:21px;
-  margin-right:3px;
+.fb-like {
+  padding-top:20px;
 }
