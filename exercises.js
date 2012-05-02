@@ -140,7 +140,7 @@ new Exercise(
 new Exercise(
   'Deadlift',
   'Barbell',
-  MathUtils.range(45, 225, 10),
+  MathUtils.range(75, 245, 10),
   function(weight) { return weight / 25 },
   function(weight) { return weight + 'lb deadlifts' }
 ),
@@ -148,24 +148,24 @@ new Exercise(
 new Exercise(
   'Power Clean',
   'Barbell',
-  MathUtils.range(25, 155, 10),
-  function(weight) { return weight / 25 },
+  MathUtils.range(60, 205, 10),
+  function(weight) { return weight / 20 },
   function(weight) { return weight + 'lb power cleans' }
 ),
 
 new Exercise(
   'Front Squat',
   'Barbell',
-  MathUtils.range(45, 175, 10),
-  function(weight) { return weight / 25 },
+  MathUtils.range(65, 205, 10),
+  function(weight) { return weight / 20 },
   function(weight) { return weight + 'lb front squats' }
 ),
   
 new Exercise(
   'Back Squat',
   'Barbell',
-  MathUtils.range(45, 250, 20),
-  function(weight) { return weight / 25 },
+  MathUtils.range(85, 285, 20),
+  function(weight) { return weight / 20 },
   function(weight) { return weight + 'lb back squats' }
 ),
       
