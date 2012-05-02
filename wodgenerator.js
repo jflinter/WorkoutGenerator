@@ -124,13 +124,15 @@ Set.prototype.scaleInDifficulty = function(direction) {
     for (var reps = 0; reps <= mostPossibleReps; reps++) {
       var increasedScaleDifficulty = reps * newDifficulty;
       if (Math.abs(increasedScaleDifficulty - currentDifficulty) < Math.abs(increasedRepDifficulty - currentDifficulty)) {
-        this.reps = reps;
-        this.difficultyLevel += direction;
-        return true;
+        if (reps >= ex.options.minReps && reps <= ex.options.maxReps) {
+          this.reps = reps;
+          this.difficultyLevel += direction;
+          return true;
+        }
       }
     }
   }
-  if (!canScaleDifficulty && canScaleReps) {
+  if (canScaleReps) {
     this.reps += direction;
     return true;
   }
