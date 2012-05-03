@@ -14,6 +14,35 @@ WodGenerator = {
   exercises : [
 
 //Bodyweight/No equipment
+//coffee table dips, clapping pushups, tabata reps (squats esp), chest to bar pullups, calf raises, lunges (low walks)
+
+new Exercise(
+  'Clapping Pushup',
+  'Bodyweight', 
+  [1], 
+  function() { return 1.2 }, 
+  function() { return 'clapping pushups' },
+  {minReps: 5}
+),
+
+new Exercise(
+  'Dip',
+  'Bodyweight', 
+  [1], 
+  function() { return 1 }, 
+  function() { return 'dips' },
+  {minReps: 5}
+),
+
+new Exercise(
+  'Lunge',
+  'Bodyweight', 
+  [1], 
+  function() { return .8 }, 
+  function() { return 'lunges' },
+  {minReps: 5}
+),
+
 new Exercise(
   'Pushup',
   'Bodyweight', 
