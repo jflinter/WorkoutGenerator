@@ -95,12 +95,12 @@ function renderWod() {
 }
 
 $("#button_harder").click(function() {
-	WodGenerator.workout.scaleToDifficulty(WodGenerator.workout.difficulty() * 1.1);
+	WodGenerator.workout.scaleToDifficulty(WodGenerator.workout.difficulty() + 10);
 	renderWod();
 });
 
 $("#button_easier").click(function() {
-	WodGenerator.workout.scaleToDifficulty(WodGenerator.workout.difficulty() * 0.9);
+	WodGenerator.workout.scaleToDifficulty(WodGenerator.workout.difficulty() - 10);
 	renderWod();
 });
 

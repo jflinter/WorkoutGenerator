@@ -83,7 +83,7 @@ new Exercise(
   'KB Swing', 
   'Kettlebells',
   [16, 20, 24, 28],
-  function(weight) { return 1 + weight / 28 },
+  function(weight) { return 1 + weight / 20 },
   function(scale) { return scale +'kg kettlebell swings' },
   {minReps: 5}
 ),
@@ -92,7 +92,7 @@ new Exercise(
   'KB Snatch', 
   'Kettlebells',
   [16, 20, 24, 28],
-  function(weight) { return 1 + weight / 28 },
+  function(weight) { return 1 + weight / 20 },
   function(scale) { return scale +'kg kettlebell snatches' },
   {minReps: 5}
 ),
@@ -140,16 +140,16 @@ new Exercise(
 new Exercise(
   'Deadlift',
   'Barbell',
-  MathUtils.range(75, 245, 10),
-  function(weight) { return weight / 25 },
+  MathUtils.range(65, 245, 20),
+  function(weight) { return (weight * .055) - 1.475 },
   function(weight) { return weight + 'lb deadlifts' }
 ),
   
 new Exercise(
   'Power Clean',
   'Barbell',
-  MathUtils.range(60, 205, 10),
-  function(weight) { return weight / 20 },
+  MathUtils.range(45, 205, 20),
+  function(weight) { return (weight * .055) - 1.475 },
   function(weight) { return weight + 'lb power cleans' }
 ),
 
@@ -157,7 +157,7 @@ new Exercise(
   'Front Squat',
   'Barbell',
   MathUtils.range(65, 205, 10),
-  function(weight) { return weight / 20 },
+  function(weight) { return (weight * .055) - 1.475 },
   function(weight) { return weight + 'lb front squats' }
 ),
   
@@ -165,7 +165,7 @@ new Exercise(
   'Back Squat',
   'Barbell',
   MathUtils.range(85, 285, 20),
-  function(weight) { return weight / 20 },
+  function(weight) { return (weight * .055) - 1.475 },
   function(weight) { return weight + 'lb back squats' }
 ),
       
@@ -174,8 +174,8 @@ new Exercise(
 new Exercise(
   'Row', 
   'Other', 
-  [200, 400, 800, 1200, 1600],
-  function(distance) { return distance * (50 / 800) },
+  [200, 400, 800, 1200, 1600, 2000],
+  function(distance) { return (distance * (1/45)) -30 },
   function(scale) { return scale + 'm row' },
   {maxReps : 1}
 ),
