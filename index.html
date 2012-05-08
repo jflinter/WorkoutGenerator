@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Workout Generator</title>
+
+  <meta name="description" content="Randomly generate crossfit-style workouts with just the equipment you have.">
+  <meta name="author" content="@jflinter">
+  <meta name="viewport" content="width=device-width">
+	<meta property="og:title" content="Workout Generator" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://www.jackflintermann.com/WorkoutGenerator" />
+	<meta property="og:image" content="" />
+	<meta property="og:site_name" content="Workout Generator" />
+	<meta property="fb:admins" content="2409601" />
+
+  <link rel="stylesheet" href="css/lib/bootstrap.css">
+  <link rel="stylesheet" href="css/wodgenerator.css">
+
+  <script src="js/lib/jquery-1.7.2.min.js"></script>
+  <script src="js/lib/underscore-min.js"></script>
+  <script src="js/lib/backbone-min.js"></script>
+  <script src="js/lib/bootstrap-modal.js"></script>
+  <script src="wodgenerator.js"></script>
+  <script src="exercises.js"></script>
+  <script src="js/persistence.js"></script>
+
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	
+  	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<div class="brand">Workout Generator</div>
+				<ul class="nav">
+					<li><a href="#infoModal" data-dismiss="modal" data-toggle="modal">About</a></li>
+	      		</ul>
+			</div>
+		</div>
+	</div>
+  	<div class="container">
+		<div class="page-header">
+			<h1>Workout Generator <div class="fb-like" data-href="http://www.jackflintermann.com/WorkoutGenerator" data-send="false" data-width="450" data-show-faces="false" data-colorscheme="light"></div></h1>
+		</div>
+		<div class="row">
+			<div class="span4">
+				<h2>Step 1</h2>
+				<h3>Pick the exercises to shuffle</h3>
+		  		<div id="exercises">
+            <div class="controls">
+              <span>all</span> | <span>none</span>
+            </div>
+          </div>
+		  	</div>
+			<div class="span4">
+				<h2>Step 2</h2>
+				<h3>Generate your workout</h3>
+				<div class='btn btn-large btn-success' id="generateWorkout" name="generateWorkout">Go!</div>
+				<div id="workout_title" style="display:none">
+					<h2>Your workout:</h2>
+					<div id="workout_display"></div>
+					<div id="button_easier" class="btn btn-info">Easier</div>
+					<div id="button_harder" class="btn btn-info">Harder</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal hide fade span8" id="infoModal">
+		<div class="modal-header">
+		    <a class="close" data-dismiss="modal">×</a>
+		    <h3>Workout Generator</h3>
+		  </div>
+		<div class="modal-body">
+			<p>Workout Generator gives you personalized crossfit-style workouts that only need the equipment that you have.</p>
+			<p>It was made by <a href="http://www.jackflintermann.com">Jack Flintermann</a>. Suggestions/comments are welcome!</p>
+		</div>
+		<div class="modal-footer">
+		    <a href="#" data-dismiss="modal" class="btn">Close</a>
+		</div>
+	</div>
+<footer><div class="container">
+</div></footer>
+<script>
+
+for (var i = 0; i < WodGenerator.exercises.length; i++) {
+	var exercise = WodGenerator.exercises[i];
+	if (document.getElementsByClassName(exercise.category).length == 0) {
+		var div = document.createElement("div");
+		div.className = exercise.category + " exercise-container";
+		var input = document.createElement("input");
+		input.type = "checkbox";
+		input.className = exercise.category + " main-input";
+		input.checked = true;
+		input.name = exercise.category;
+		input.addEventListener('click', function(event) {
+			checkboxes = $('input.' + this.name).not('.main-input').toArray();
+			for (var j = 0; j < checkboxes.length; j++) {
+				var checkbox = checkboxes[j];
+				checkbox.checked = this.checked;
+        $(checkbox).trigger('change');
+			}
+		});
+		var label = document.createElement('label')
+		label.className = "checkbox";
+		label.appendChild(document.createTextNode(exercise.category));
+		label.appendChild(input);
+		var child_div = document.createElement("div");
+		child_div.className = exercise.category + " exercise-sub-container";
+		div.appendChild(label);
+		div.appendChild(child_div);
+		document.getElementById('exercises').appendChild(div);
+	}
+	var input = document.createElement("input");
+	input.type = "checkbox";
+	input.className = exercise.category;
+	input.checked = true;
+	input.name = exercise.name;
+	var label = document.createElement('label')
+	label.className = "checkbox";
+	label.appendChild(document.createTextNode(exercise.name));
+	label.appendChild(input);
+	$("."+exercise.category+" .exercise-sub-container")[0].appendChild(label);
+}
+
+Set.prototype.render = function() {
+    return this.reps + " " + this.exercise.renderForLevel(this.difficultyLevel) + " ";
+}
+
+Workout.prototype.render = function() {
+    var renderedWorkout = "<dl><dt>";
+    if (this.workoutType == "AMRAP") {
+        renderedWorkout += "As many rounds as possible in " + this.time + " minutes of: ";
+    }
+    else {
+        renderedWorkout += this.numberOfRounds + " round" + ((this.numberOfRounds != 1) ? "s" : "") + " of: "
+    }
+    renderedWorkout += "</dt>";
+    renderedWorkout += this.superset.render();
+    renderedWorkout += "</dl>";
+    return renderedWorkout;
+};
+
+document.getElementById('generateWorkout').addEventListener('click', function() {
+	var exerciseNames = $.map($("input:checked").not(".main-input"), function(e) {
+		return e.name;
+	});
+	var exercises = WodGenerator.exercises.filter(function(exercise) {
+		return ($.inArray(exercise.name, exerciseNames) != -1);
+	});
+	WodGenerator.workout = new Workout(120, exercises);
+	renderWod();
+});
+
+function renderWod() {
+	var html = WodGenerator.workout.render();
+	$("#workout_display").html(html);
+	$("#workout_title").show();
+	
+}
+
+$("#button_harder").click(function() {
+	WodGenerator.workout.scaleToDifficulty(WodGenerator.workout.difficulty() + 10);
+	renderWod();
+});
+
+$("#button_easier").click(function() {
+	WodGenerator.workout.scaleToDifficulty(WodGenerator.workout.difficulty() - 10);
+	renderWod();
+});
+
+
+
+</script>
+
+</body>
+</html>
