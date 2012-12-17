@@ -76,7 +76,7 @@ new Exercise(
   [1],
   function() { return 0.3 },
   function() { return 'situps' }, 
-  {minReps: 5, maxReps: 100}
+  {minReps: 5}
 ),
 
 new Exercise(
@@ -218,14 +218,6 @@ new Exercise(
   {minReps : 3}
 ),
 
-],
-other : [
-new Exercise(
-  'Rest', 
-  'Other',
-  function() { return 0 },
-  function(time) { return time + 'mminute rest' }
-),
 ]
 
 };
